@@ -25,8 +25,6 @@ export class TokenService {
    * @param {string} token
    * @param {mongoose.Types.ObjectId} userId
    * @param {Moment} expires
-   * @param {string} type
-   * @param {boolean} [blacklisted]
    * @returns {Promise<ITokenDoc>}
    */
   async saveToken(
@@ -45,18 +43,24 @@ export class TokenService {
   }
 
   /**
- * Generate auth tokens
- * @param {IUserDoc} user
- * @returns {Promise<AccessAndRefreshTokens>}
- */
- async generateAuthTokens  (user: IUserDoc): Promise<AccessAndRefreshTokens> {
-    const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
+   * Generate auth tokens
+   * @param {IUserDoc} user
+   * @returns {Promise<AccessAndRefreshTokens>}
+   */
+  async generateAuthTokens(user: IUserDoc): Promise<AccessAndRefreshTokens> {
+    const accessTokenExpires = moment().add(
+      config.jwt.accessExpirationMinutes,
+      "minutes"
+    );
     const accessToken = this.generateToken(user.id, accessTokenExpires);
-  
-    const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
+
+    const refreshTokenExpires = moment().add(
+      config.jwt.refreshExpirationDays,
+      "days"
+    );
     const refreshToken = this.generateToken(user.id, refreshTokenExpires);
     await this.saveToken(refreshToken, user.id, refreshTokenExpires);
-  
+
     return {
       access: {
         token: accessToken,
@@ -67,7 +71,7 @@ export class TokenService {
         expires: refreshTokenExpires.toDate(),
       },
     };
-  };
+  }
 
   async verifyToken(token: string): Promise<ITokenDoc> {
     const payload = jwt.verify(token, config.jwt.secret);

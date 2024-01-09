@@ -1,10 +1,10 @@
-import Joi from 'joi';
-import { IRegisterUserRequest } from '../../modules/user/user.interfaces';
+import Joi from "joi";
+import { IRegisterUserRequest } from "../../modules/user/user.interfaces";
 
 const registerBody: Record<keyof IRegisterUserRequest, any> = {
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-    name: Joi.string().required(),
+  email: Joi.string().required().email(),
+  password: Joi.string().required(),
+  name: Joi.string().required(),
 };
 
 export const register = {

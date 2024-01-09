@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { ITokenDoc, ITokenModel } from './token.interfaces';
+import mongoose from "mongoose";
+import { ITokenDoc, ITokenModel } from "./token.interfaces";
 
 const tokenSchema = new mongoose.Schema<ITokenDoc, ITokenModel>(
   {
@@ -10,7 +10,7 @@ const tokenSchema = new mongoose.Schema<ITokenDoc, ITokenModel>(
     },
     user: {
       type: String,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     expires: {
@@ -26,6 +26,6 @@ const tokenSchema = new mongoose.Schema<ITokenDoc, ITokenModel>(
 // add plugin that converts mongoose to json
 // tokenSchema.plugin(toJSON);
 
-const Token = mongoose.model<ITokenDoc, ITokenModel>('Token', tokenSchema);
+const Token = mongoose.model<ITokenDoc, ITokenModel>("Token", tokenSchema);
 
 export default Token;
